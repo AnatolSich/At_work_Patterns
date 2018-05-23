@@ -2,53 +2,43 @@ package EBuilder;
 
 public class BuilderTest {
     public static void main(String[] args) {
-        ShoesType shoesType = ShoesType.PUMPS;
-        String productType = "shoes";
-
-        Director director = new Director();
-        Builder builder = null;
-
-
-        if (productType.equalsIgnoreCase("shoes")) {
-            builder = new ShoesBuilder();
-        } else if (productType.equalsIgnoreCase("shoesDiscription")) {
-            builder = new ShoesDiscrBuilder();
-        }
-
-        if (shoesType.equals(ShoesType.OXFORDS)) {
-            director.constructOxfords(builder);
-        } else if (shoesType.equals(ShoesType.ESPADRILLES)) {
-            director.constructEspadrilles(builder);
-        } else if (shoesType.equals(ShoesType.BOOTS)) {
-            director.constructBoots(builder);
-        } else if (shoesType.equals(ShoesType.SNEAKERS)) {
-            director.constructSneakers(builder);
-        } else if (shoesType.equals(ShoesType.LOAFERS)) {
-            director.constructLoafers(builder);
-        } else if (shoesType.equals(ShoesType.CLEATS)) {
-            director.constructCleats(builder);
-        } else if (shoesType.equals(ShoesType.PUMPS)) {
-            director.constructPumps(builder);
-        }
-
 
         Shoes shoes = null;
         ShoesDiscription shoesDiscription = null;
 
+        Director director = new Director("shoes");
+        director.selectShoesType(ShoesType.PUMPS);
+
         try {
-            shoes = ((ShoesBuilder) builder).getResult();
+            shoes = ((ShoesBuilder) director.builder).getResult();
         } catch (ClassCastException e) {
         }
 
         try {
-            shoesDiscription = ((ShoesDiscrBuilder) builder).getResult();
+            shoesDiscription = ((ShoesDiscrBuilder) director.builder).getResult();
         } catch (ClassCastException e) {
         }
 
-
-        System.out.println("Shoes build:\n " + shoes);
+        if (shoes != null) System.out.println("Shoes build:\n " + shoes);
         if (shoesDiscription != null) System.out.println("ShoesDiscription build:\n " + shoesDiscription.print());
-        else System.out.println("ShoesDiscription build:\n " + shoesDiscription);
+        else System.out.println("ShoesDescription build:\n " + shoesDiscription);
+
+        director = new Director("shoesDescription");
+        director.selectShoesType(ShoesType.ESPADRILLES);
+
+        try {
+            shoes = ((ShoesBuilder) director.builder).getResult();
+        } catch (ClassCastException e) {
+        }
+
+        try {
+            shoesDiscription = ((ShoesDiscrBuilder) director.builder).getResult();
+        } catch (ClassCastException e) {
+        }
+
+        if (shoes != null) System.out.println("Shoes build:\n " + shoes);
+        if (shoesDiscription != null) System.out.println("ShoesDiscription build:\n " + shoesDiscription.print());
+        else System.out.println("ShoesDescription build:\n " + shoesDiscription);
 
     }
 }
